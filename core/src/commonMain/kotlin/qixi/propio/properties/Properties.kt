@@ -49,30 +49,15 @@ open class Properties {
     }
 
     fun getInt(key: String, defaultValue: Int = 0): Int {
-        val value: String? = map[key]
-        return try {
-            value?.toInt() ?: defaultValue
-        } catch (nfe: NumberFormatException) {
-            defaultValue
-        }
+        return StringParser.getInt(map[key], defaultValue)
     }
 
     fun getFloat(key: String, defaultValue: Float = 0f): Float {
-        val value: String? = map[key]
-        return try {
-            value?.toFloat() ?: defaultValue
-        } catch (nfe: NumberFormatException) {
-            defaultValue
-        }
+        return StringParser.getFloat(map[key], defaultValue)
     }
 
     fun getLong(key: String, defaultValue: Long): Long {
-        val value: String? = map[key]
-        return try {
-            value?.toLong() ?: defaultValue
-        } catch (nfe: NumberFormatException) {
-            defaultValue
-        }
+        return StringParser.getLong(map[key], defaultValue)
     }
 
     fun getString(key: String, defaultValue: String = ""): String {
@@ -80,16 +65,11 @@ open class Properties {
     }
 
     fun getBoolean(key: String, defaultValue: Boolean): Boolean {
-        return when (this[key]) {
-            "true" -> true
-            "false" -> false
-            else -> defaultValue
-        }
+        return StringParser.getBoolean(map[key], defaultValue)
     }
 
     fun getStringSet(key: String, separator: String = ","): Set<String> {
-        val value: String? = map[key]
-        return value?.split(separator)?.toSet() ?: emptySet()
+        return StringParser.getStringSet(map[key], separator)
     }
 
     fun readFrom(source: Source) {
