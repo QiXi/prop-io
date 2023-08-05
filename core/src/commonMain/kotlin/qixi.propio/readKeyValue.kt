@@ -18,7 +18,7 @@ fun Source.readKeyValue(): Pair<String?, String?> {
         val b = peekSource.readByte().toInt()
         if (offset == 0L && b == '#'.code || b == '!'.code) {
             isComment = true
-        } else if (!isComment && !hasSeparator && b == '='.code || b == ':'.code) {
+        } else if (!isComment && !hasSeparator && (b == '='.code || b == ':'.code)) {
             keyLength = offset
             hasSeparator = true
         } else if (b == '\n'.code) {
