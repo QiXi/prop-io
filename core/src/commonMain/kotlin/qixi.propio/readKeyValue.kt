@@ -16,7 +16,7 @@ fun Source.readKeyValue(): Pair<String?, String?> {
     var newlineSize = 0L
     while (peekSource.request(1)) {
         val b = peekSource.readByte().toInt()
-        if (offset == 0L && b == '#'.code || b == '!'.code) {
+        if (offset == 0L && (b == '#'.code || b == '!'.code)) {
             isComment = true
         } else if (!isComment && !hasSeparator && (b == '='.code || b == ':'.code)) {
             keyLength = offset
