@@ -1,8 +1,9 @@
 package qixi.propio.repository
 
 import kotlinx.io.Sink
+import kotlinx.io.buffered
 import kotlinx.io.files.Path
-import kotlinx.io.files.source
+import kotlinx.io.files.SystemFileSystem
 import qixi.propio.MutablePreferences
 import qixi.propio.Preferences
 import qixi.propio.mutablePreferencesOf
@@ -38,15 +39,16 @@ abstract class DataRepository<K, V> {
         }
     }
 
-    fun remove(key: K) {
+    fun remove(key: K): V? {
         val data = repository.remove(key)
         if (data != null) removeSource(data)
+        return data
     }
 
     open fun load(data: V): Boolean {
         val filePath = getPath(data) ?: return false
         val prop = mutablePreferencesOf()
-        prop.readFrom(filePath.source())
+        prop.readFrom(SystemFileSystem.source(filePath).buffered())
         readData(data, prop)
         return true
     }

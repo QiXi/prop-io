@@ -9,10 +9,13 @@ kotlin {
             useJUnitPlatform()
         }
     }
+    js(IR) {
+        browser()
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.2.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
             }
         }
         val commonTest by getting {
