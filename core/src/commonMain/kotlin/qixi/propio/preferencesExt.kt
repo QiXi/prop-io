@@ -2,6 +2,9 @@ package qixi.propio
 
 import kotlinx.io.Sink
 import kotlinx.io.Source
+import kotlinx.io.buffered
+import kotlinx.io.files.Path
+import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.writeString
 
 fun MutablePreferences.readFrom(source: Source) {
@@ -11,6 +14,10 @@ fun MutablePreferences.readFrom(source: Source) {
             addEntry(key, value)
         }
     }
+}
+
+fun MutablePreferences.readFrom(filePath: Path) {
+    this.readFrom(SystemFileSystem.source(filePath).buffered())
 }
 
 fun MutablePreferences.addEntry(name: String, value: String) {
@@ -43,11 +50,15 @@ fun Preferences.writeTo(sink: Sink) {
             is Double -> "d.${key.name}"
             else -> key.name
         }
-        val saveValue = when (value){
+        val saveValue = when (value) {
             is String -> value.replace("\n", "\\n")
             else -> value
         }
         sink.writeString("$keyName=$saveValue\n")
     }
     sink.emit()
+}
+
+fun Preferences.writeTo(filePath: Path) {
+    this.writeTo(SystemFileSystem.sink(filePath).buffered())
 }
