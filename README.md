@@ -1,6 +1,23 @@
 # prop-io
 Kotlin multiplatform library for reading and writing files in the format `type.key=value`
 
+This library provides a combination of the [`datastore-preferences`](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/package-summary.html) interface and the data format as [`.properties`](https://ru.wikipedia.org/wiki/.properties) based on a single [`kotlinx-io`](https://github.com/Kotlin/kotlinx-io) dependency
+
+## Format
+Comment lines in .prop files are denoted by the number sign (#) or the exclamation mark (!) as the first non blank character, in which all remaining text on that line is ignored.
+Example file
+```
+# Comment
+! Comment
+key=value
+# key for a String preference
+s.name=String value
+# key for a Float preference
+f.rating=6.0
+# key for a Int preference
+i.votes=0
+```
+
 ## Supported Types
 ```
 s. - String
